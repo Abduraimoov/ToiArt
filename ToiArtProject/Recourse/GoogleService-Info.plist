@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>669005658204-h6v8b4reu04mjgs9tqpi19i91b7u7jfo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.669005658204-h6v8b4reu04mjgs9tqpi19i91b7u7jfo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCAtKWDyWc7UPRRzieH1fYcRSSwmSPhxHw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>669005658204</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>nurtilek.com.myCoffeeHouseProject</string>
+	<key>PROJECT_ID</key>
+	<string>mycoffeehouseproject</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mycoffeehouseproject.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:669005658204:ios:331d540a5bbc0827c54e99</string>
+</dict>
+</plist>
