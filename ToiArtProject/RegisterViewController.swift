@@ -10,6 +10,7 @@ import UIKit
 protocol RegisterViewControllerDelegate: AnyObject {
     func didLoginButton()
     func didSingupButton()
+    func showErrorAlert(message: String)
 }
 
 class RegisterViewController: UIViewController {
@@ -20,6 +21,11 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         setupHelpers()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        registerUI.localizesLanguage()
     }
     
     private func setupHelpers() {
@@ -35,9 +41,23 @@ class RegisterViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка".localized(),
+                                      message: message.localized(),
+                                      preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Ок".localized(), style: .destructive, handler: nil)
+        alert.addAction(acceptAction)
+        present(alert, animated: true)
+    }
 }
 
 extension RegisterViewController: RegisterViewControllerDelegate {
+    
+    func showErrorAlert(message: String) {
+        showAlert(message: message)
+    }
+    
     func didLoginButton() {
         let vc = LoginViewController()
         navigationController?.pushViewController(vc,
@@ -45,7 +65,9 @@ extension RegisterViewController: RegisterViewControllerDelegate {
     }
     func didSingupButton() {
         let vc = TabBarController()
-        navigationController?.pushViewController(vc,
-                                                 animated: true)
+        if let menuVC = (vc.viewControllers?[3] as? UINavigationController)?.viewControllers.first as? MenuViewController {
+            menuVC.name = registerUI.nameTextField.text
+        }
+        navigationController?.pushViewController(ViewController(), animated: true)
     }
 }

@@ -11,19 +11,14 @@ class RegisterView: UIView {
     
     private let logoIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "logoToiArt")
+        view.image = UIImage(named: "logoImageToi")
         view.contentMode = .scaleAspectFill
         return view
     }()
     
     private let registerLabel: UILabel = {
         let label = UILabel()
-        let attributedString = NSMutableAttributedString(string: "Register")
-        attributedString.addAttribute(.kern,
-                                      value: 2.0,
-                                      range: NSRange(location: 0,
-                                                     length: attributedString.length))
-        label.attributedText = attributedString
+        label.text = "Регстрация"
         label.font = .systemFont(ofSize: 25, weight: .medium)
         label.tintColor = .label
         
@@ -32,10 +27,11 @@ class RegisterView: UIView {
     
     private let enterCredemtailsLabel: UILabel = {
         let view = UILabel()
-        view.text = "Enter your credentials to continue"
+        view.text = "Введите свои учетные данные, чтобы продолжить"
         view.font = .systemFont(ofSize: 16,
                                 weight: .medium)
         view.textColor = UIColor.init(hex: "#7C7C7C")
+        view.numberOfLines = 0
         return view
     }()
     
@@ -49,7 +45,7 @@ class RegisterView: UIView {
     private let emailLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .label
-        view.text = " Email "
+        view.text = " Введите емаил "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -57,7 +53,7 @@ class RegisterView: UIView {
         return view
     }()
     
-    private let nameTextField: PaddedTextField = {
+    let nameTextField: PaddedTextField = {
         let view = PaddedTextField()
         view.tintColor = .label
         view.layer.borderColor = UIColor.label.cgColor
@@ -68,7 +64,7 @@ class RegisterView: UIView {
     private let nameLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Name "
+        view.text = " Введите имю "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -86,7 +82,7 @@ class RegisterView: UIView {
     private let numberLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Number "
+        view.text = " Введите номер "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -121,7 +117,7 @@ class RegisterView: UIView {
     private let passwordLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Password "
+        view.text = " Введите пароль "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -156,7 +152,7 @@ class RegisterView: UIView {
     private let confirmLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Confirm password "
+        view.text = " Подтвердите пароль "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -167,7 +163,7 @@ class RegisterView: UIView {
     
     private let SingupButton: UIButton = {
         let view = UIButton(type: .system)
-        view.setTitle("Sing up",
+        view.setTitle("Войти",
                       for: .normal)
         view.tintColor = .black
         view.backgroundColor = UIColor.init(hex: "#00d400")
@@ -184,7 +180,7 @@ class RegisterView: UIView {
     
     private let accountLabel: UILabel = {
         let view = UILabel()
-        view.text = "Already have an account?"
+        view.text = "Уже есть аккаунт ?"
         view.font = .systemFont(ofSize: 14,
                                 weight: .regular)
         view.textColor = .black
@@ -193,7 +189,7 @@ class RegisterView: UIView {
     
     private let loginButton: UIButton = {
         let view = UIButton()
-        view.setTitle("Login",
+        view.setTitle("Логин",
                       for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14,
                                                   weight: .medium)
@@ -215,6 +211,21 @@ class RegisterView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func localizesLanguage() {
+        registerLabel.text = "Регстрация".localized()
+        enterCredemtailsLabel.text = "Введите свои учетные данные, чтобы продолжить".localized()
+        emailLabel.text = " Введите емаил ".localized()
+        nameLabel.text = " Введите имю ".localized()
+        numberLabel.text = " Введите номер ".localized()
+        passwordLabel.text = " Введите пароль ".localized()
+        confirmLabel.text = " Подтвердите пароль "
+        SingupButton.setTitle("Войти".localized(),
+                              for: .normal)
+        accountLabel.text = "Уже есть аккаунт ?".localized()
+        loginButton.setTitle("Логин".localized(),
+                             for: .normal)
     }
     
     private func setupAdd() {
@@ -254,6 +265,7 @@ class RegisterView: UIView {
         enterCredemtailsLabel.snp.makeConstraints { make in
             make.top.equalTo(registerLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
         }
         
         emailTextField.snp.makeConstraints { make in
@@ -322,7 +334,6 @@ class RegisterView: UIView {
             make.centerX.equalToSuperview()
             make.height.equalTo(14)
         }
-        
     }
     
     private func setupAddTarget() {
@@ -332,6 +343,7 @@ class RegisterView: UIView {
         SingupButton.addTarget(self,
                                action: #selector(homeUITransilation),
                                for: .touchUpInside)
+        
     }
     
     private func setupDelegates() {
@@ -362,7 +374,41 @@ class RegisterView: UIView {
     
     @objc
     private func homeUITransilation() {
+        guard let email = emailTextField.text, email.contains("@gmail.com") else {
+            delegate?.showErrorAlert(message: "Обязательно напишите @gmail.com".localized())
+            return
+        }
+        
+        guard let name = nameTextField.text, !name.isEmpty else {
+            delegate?.showErrorAlert(message: "Поле не должно быть пустым".localized())
+            return
+        }
+        
+        guard let number = numberTextField.text, number.hasPrefix("+996"), number.count == 13 else {
+            delegate?.showErrorAlert(message: "Напишите номер с +996 и убедитесь, что номер содержит 16 символов".localized())
+            return
+        }
+        
+        guard let password = passwordTextField.text, password.count >= 6 else {
+            delegate?.showErrorAlert(message: "Пароль должен быть не менее 6 символов".localized())
+            return
+        }
+        
+        guard let confirm = confirmTextField.text, confirm.count >= 6 else {
+            delegate?.showErrorAlert(message: "Пароль должен быть не менее 6 символов".localized())
+            return
+        }
+        
+        guard password == confirm else {
+            delegate?.showErrorAlert(message: "Пароли не совпадают".localized())
+            return
+        }
+        proceedToNextScreen()
+    }
+    
+    private func proceedToNextScreen() {
         delegate?.didSingupButton()
+        UserDefaults.standard.set(nameTextField.text, forKey: "userName")
     }
     
 }

@@ -11,9 +11,6 @@ enum languageType: String {
     case kg = "ky-KG"
     case ru = "ru"
     case en = "en"
-    case ar = "ar"
-    case tr = "tr"
-    case kz = "kk-KZ"
 }
 
 class AppLanguageManager {
@@ -29,14 +26,14 @@ class AppLanguageManager {
     }
     
     func setApplanguage(language: languageType) {
-       setCurrentlanguage(language: language)
+        setCurrentlanguage(language: language)
         setCurrentBabdlePath(languageCode: language.rawValue)
     }
     
     private func setCurrentlanguage(language: languageType) {
         currentLanguge = language
-        //TODO: добавить сохранение userDefaults
-      //  UserDefaults.standard.set(currentLanguge, forKey: "language")
+        UserDefaults.standard.set(language.rawValue,
+                                  forKey: "AppLanguage")
     }
     
     private func setCurrentBabdlePath(languageCode: String) {
@@ -46,7 +43,6 @@ class AppLanguageManager {
         }
         currentBundle = langBundle
     }
-    
 }
 
 extension String {
@@ -55,4 +51,3 @@ extension String {
         return NSLocalizedString(self, tableName: "Localizable", bundle: bundle, value: "", comment: "")
     }
 }
-

@@ -22,6 +22,11 @@ class SmsViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        smsView.localizedLanguage()
+    }
+    
     private func setupHelpers() {
         view.backgroundColor = .systemBackground
         smsView.delegate = self

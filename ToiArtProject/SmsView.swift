@@ -10,19 +10,20 @@ import SnapKit
 
 class SmsView: UIView {
     
-   private lazy var logoIcon: UIImageView = {
+    private lazy var logoIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "logoToiArt")
+        view.image = UIImage(named: "logoImageToi")
         return view
     }()
     
     private lazy var smsTitle: UILabel = {
         let view = UILabel()
-        view.text = "Enter your 6-digit code"
+        view.text = "Введите свой шестизначный код"
         view.tintColor = .black
         view.font = .systemFont(
             ofSize: 24,
             weight: .medium)
+        view.numberOfLines = 0
         return view
     }()
     
@@ -63,6 +64,13 @@ class SmsView: UIView {
         
     }
     
+    func localizedLanguage() {
+        smsTitle.text = "Введите свой шестизначный код".localized()
+        nextButton.setTitle(
+            "Войти".localized(),
+            for: .normal)
+    }
+    
     private func setupAdd() {
         addSubview(logoIcon)
         addSubview(smsTitle)
@@ -80,6 +88,7 @@ class SmsView: UIView {
         smsTitle.snp.makeConstraints { make in
             make.top.equalTo(logoIcon.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
         }
         
         fieldStack.snp.makeConstraints { make in
@@ -131,7 +140,7 @@ extension SmsView: smsModelDelegate {
         if tag != verifyFields.count - 1 {
             verifyFields[tag + 1].becomeFirstResponder()
         } else {
-
+            
         }
     }
     

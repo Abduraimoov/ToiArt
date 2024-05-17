@@ -16,13 +16,13 @@ class PhoneNumberView: UIView {
     
     private lazy var logoIcon: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "logoToiArt")
+        view.image = UIImage(named: "logoImageToi")
         return view
     }()
     
     private lazy var entranceTitle: UILabel = {
         let view = UILabel()
-        view.text = "Enter your mobile number"
+        view.text = "Введите номер мобильного телефона"
         view.tintColor = .systemGray3
         view.font = .systemFont(
             ofSize: 24,
@@ -56,7 +56,7 @@ class PhoneNumberView: UIView {
     private let numberLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Mobile Number "
+        view.text = " Введите номер "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -87,6 +87,14 @@ class PhoneNumberView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func localizedLanguage() {
+        entranceTitle.text = "Введите номер мобильного телефона".localized()
+        numberLabel.text = " Введите номер ".localized()
+        toComeInButton.setTitle(
+            "Войти".localized(),
+            for: .normal)
     }
     
     private func setupAddTarget() {

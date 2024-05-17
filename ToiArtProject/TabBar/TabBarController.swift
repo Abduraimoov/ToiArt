@@ -26,8 +26,6 @@ class TabBarController: UITabBarController {
         return navController
     }
     
-    
-    
     private func generateTabBar() {
         viewControllers = [
             generateVC(
@@ -36,11 +34,11 @@ class TabBarController: UITabBarController {
             ),
             generateVC(
                 viewController: ScheduleViewController(),
-                image: UIImage(systemName: "cart.badge.questionmark.rtl")
+                image: UIImage(systemName: "list.bullet.clipboard.fill")
             ),
             generateVC(
                 viewController: NoteViewController(),
-                image: UIImage(systemName: "list.bullet.clipboard.fill") 
+                image: UIImage(systemName: "note.text.badge.plus")
             ),
             generateVC(
                 viewController: MenuViewController(),
@@ -74,4 +72,3 @@ class TabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = UIColor.gray
     }
 }
-

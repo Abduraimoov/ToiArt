@@ -52,21 +52,21 @@ final class AuthService {
     }
     
     func signIn(
-           with email: String,
-           password: String,
-           completion: @escaping (Result<Void, Error>) -> Void
-       ) {
-           Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
-               if authDataResult != nil {
-                   self.authorize()
-                   completion(.success(()))
-               }
-               if let error {
-                   completion(.failure(error))
-                   print(error.localizedDescription)
-               }
-           }
-       }
+        with email: String,
+        password: String,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        Auth.auth().signIn(withEmail: email, password: password) { authDataResult, error in
+            if authDataResult != nil {
+                self.authorize()
+                completion(.success(()))
+            }
+            if let error {
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     func authorize() {
         let currentDate = Date()

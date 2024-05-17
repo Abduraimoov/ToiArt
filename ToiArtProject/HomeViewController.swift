@@ -17,13 +17,18 @@ class HomeViewController: UIViewController {
         setupHelpers()
         setupConstraints()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLocalizable()
+    }
 
     private func setupHelpers() {
         view.backgroundColor = .systemBackground
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .label
         navigationItem.hidesBackButton = true
-        navigationItem.title = "Home"
+        navigationItem.title = "Главная"
         let image = UIImage(named: "logoo")
         let imageView = UIImageView(image: image)
         imageView.snp.makeConstraints { make in
@@ -31,6 +36,11 @@ class HomeViewController: UIViewController {
         }
         let imageItem = UIBarButtonItem(customView: imageView)
         navigationItem.leftBarButtonItem = imageItem
+    }
+    
+    private func setupLocalizable() {
+        navigationItem.title = "Главная".localized()
+        homeUI.localizableLanguage()
     }
     
     private func setupConstraints() {

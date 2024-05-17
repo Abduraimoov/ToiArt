@@ -8,12 +8,6 @@
 import UIKit
 import CoreData
 
-//CRUD - Create Read Update Delete
-// Post(Fetch) - create
-//Get(Patch) - read
-//Put - update, patch
-// DELETE - delete
-
 enum coreDataResponse {
     case success
     case failure
@@ -22,7 +16,6 @@ enum coreDataResponse {
 class CoreDataService {
     
     static let shared = CoreDataService()
-    
     
     private init() {
         
@@ -35,8 +28,6 @@ class CoreDataService {
     private var context: NSManagedObjectContext {
         appDelegate.persistentContainers.viewContext
     }
-    
-    // post - запись, типа положить что-то на базу
     
     func addNote(id: String, title: String, description: String, date: String, completionHandler: @escaping (coreDataResponse) -> Void) {
         guard let entity = NSEntityDescription.entity(forEntityName: "Note", in: context) else {
@@ -51,16 +42,11 @@ class CoreDataService {
         note.date = date
         
         appDelegate.saveContext()
-        // Таймер для ячеек потом доделаю
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //            completionHandler(.success)
-        //        }
+        
         DispatchQueue.main.async {
             completionHandler(.success)
         }
     }
-    
-    //get, fetch - записать, считать
     
     func fetchNotes() -> [Note] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
@@ -87,7 +73,7 @@ class CoreDataService {
         } catch {
             print(error.localizedDescription)
         }
-       
+        
     }
     
     //MARK: - Удаление внутри ячеек
@@ -116,6 +102,7 @@ class CoreDataService {
         appDelegate.saveContext()
     }
     
+    
     //MARK: - Общий удаление
     
     func deleteNotes(completionHandler: @escaping (coreDataResponse) -> Void) {
@@ -123,25 +110,24 @@ class CoreDataService {
         
         do {
             guard let notes = try context.fetch(fetchRequest) as? [Note] else {
+                print("No notes fetched")
                 DispatchQueue.main.async {
                     completionHandler(.failure)
                 }
                 return
             }
-            notes.forEach { note in
+            for note in notes {
                 context.delete(note)
             }
+            try context.save()
             DispatchQueue.main.async {
                 completionHandler(.success)
             }
-        } catch {
-            print(error.localizedDescription)
+        } catch let error as NSError {
+            print("Error in deleting notes: \(error), \(error.userInfo)")
             DispatchQueue.main.async {
                 completionHandler(.failure)
             }
         }
-        appDelegate.saveContext()
     }
-    
 }
-

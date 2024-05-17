@@ -26,7 +26,7 @@ class StartingView: UIView {
     
     private let deckriptionLabel: UILabel = {
         let view = UILabel()
-        view.text = "Welcome to the creative platform toi art. select a login method."
+        view.text = "Добро пожаловать на творческую платформу Toi Art. выберите способ входа."
         view.numberOfLines = 0
         view.font = .systemFont(ofSize: 20,
                                 weight: .semibold)
@@ -85,6 +85,19 @@ class StartingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func localizedLanguage() {
+        deckriptionLabel.text = "Добро пожаловать на творческую платформу Toi Art. выберите способ входа.".localized()
+        registrationbutton.setTitle(
+            "Зарегистрироваться".localized(),
+            for: .normal)
+        numberPhoneButton.setTitle(
+            "Войти по номеру телефона".localized(),
+            for: .normal)
+        loginButton.setTitle(
+            "Войти".localized(),
+            for: .normal)
+    }
+    
     private func setupAdd() {
         addSubview(logoIMage)
         addSubview(logoToiArt)
@@ -96,13 +109,13 @@ class StartingView: UIView {
     
     private func setupConstraints() {
         logoIMage.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(30)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(20)
             make.horizontalEdges.equalToSuperview().inset(40)
             make.height.equalTo(120)
         }
         
         logoToiArt.snp.makeConstraints { make in
-            make.top.equalTo(logoIMage.snp.bottom).offset(100)
+            make.top.equalTo(logoIMage.snp.bottom).offset(80)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(54)
         }
@@ -114,19 +127,19 @@ class StartingView: UIView {
         }
         
         registrationbutton.snp.makeConstraints { make in
-            make.top.equalTo(deckriptionLabel.snp.bottom).offset(50)
+            make.top.equalTo(deckriptionLabel.snp.bottom).offset(30)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
         
         numberPhoneButton.snp.makeConstraints { make in
-            make.top.equalTo(registrationbutton.snp.bottom).offset(20)
+            make.top.equalTo(registrationbutton.snp.bottom).offset(15)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
         
         loginButton.snp.makeConstraints { make in
-            make.top.equalTo(numberPhoneButton.snp.bottom).offset(20)
+            make.top.equalTo(numberPhoneButton.snp.bottom).offset(15)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }

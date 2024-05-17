@@ -15,6 +15,8 @@ class NoteViewController: UIViewController {
     
     private var controller: NoteControllerProtocol?
     
+    var noteService = CoreDataService.shared
+    
     private var notes: [Note] = []
     
     private lazy var noteSearchBar: UISearchBar = {
@@ -50,7 +52,7 @@ class NoteViewController: UIViewController {
         let view = UIButton(type: .system)
         view.setTitle("+", for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 30)
-        view.backgroundColor = UIColor().rgb(r: 255, g: 61, b: 61, alpha: 1)
+        view.backgroundColor = UIColor.init(hex: "#00d400")
         view.setTitleColor(.white, for: .normal)
         view.layer.cornerRadius = 21
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +67,6 @@ class NoteViewController: UIViewController {
         updateInterfaceForTheme()
         setupCollectionView()
         setupButton()
-        setupNavigationItem()
         controller = NoteController(view: self)
         navigationItem.hidesBackButton = true
     }
@@ -81,28 +82,25 @@ class NoteViewController: UIViewController {
         setupLocaliazble()
     }
     
-    private func setupNavigationItem() {
-        let rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: .none)
-        navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-    
     private func setupLocaliazble() {
         let backButton = UIBarButtonItem()
         backButton.title = "".localized()
         navigationItem.backBarButtonItem = backButton
-        noteSearchBar.placeholder = "Search".localized()
-        titleLabel.text = "Notes".localized()
-        navigationItem.title = "Home".localized()
+        noteSearchBar.placeholder = "Поиск".localized()
+        titleLabel.text = "Заметки".localized()
+        navigationItem.title = "Заметки".localized()
+        let rightBarButtonItem = UIBarButtonItem(title: "Удалить".lowercased(), style: .plain, target: self, action: #selector(handleDeleteNotes))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
-        
+    
     private func updateInterfaceForTheme(isDark: Bool? = nil) {
         if let isDark = isDark {
             UserDefaults.standard.set(isDark, forKey: "Theme")
         }
         let isDarkMode = UserDefaults.standard.bool(forKey: "Theme")
-        navigationController?.navigationBar.tintColor = isDarkMode ? .white : .black
+        navigationController?.navigationBar.tintColor = isDarkMode ? .white : UIColor.init(hex: "#0093B2")
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isDarkMode ? UIColor.white : UIColor.black]
-        navigationItem.rightBarButtonItem?.tintColor = isDarkMode ? .white : .black
+        navigationItem.rightBarButtonItem?.tintColor = isDarkMode ? .white : .blue
     }
     
     private func setupUI() {
@@ -148,7 +146,52 @@ class NoteViewController: UIViewController {
         controller?.onNoteSearching(text: noteSearchBar.text ?? "")
     }
     
+    
+    @objc private func handleDeleteNotes() {
+        
+        let alert = UIAlertController(title: "Удалить".localized(), message: "Вы действительно хотите удалить всю заметку ?".localized(), preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Yes".localized(), style: .destructive) { action in
+            self.deleteNotes()
+        }
+        
+        let actionDecline = UIAlertAction(title: "No".localized(), style: .cancel)
+        
+        alert.addAction(actionDecline)
+        alert.addAction(acceptAction)
+        
+        present(alert, animated: true)
+    }
+    
+    
+    private let coreDataservice = CoreDataService.shared
+    
+    func deleteNotes() {
+        coreDataservice.deleteNotes { response in
+            if response == .success {
+                self.succesDelete()
+            } else {
+                self.failureDelete()
+            }
+        }
+    }
+    
+    func succesDelete() {
+        DispatchQueue.main.async {
+            self.notes = []
+            self.notesCollectionView.reloadData()
+        }
+    }
+    
+    func failureDelete() {
+        let alert = UIAlertController(title: "Ошибка", message: "Не удалось удалить заметку!", preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "ОК", style: .cancel)
+        alert.addAction(acceptAction)
+        present(alert, animated: true)
+    }
+    
 }
+
+
 
 extension NoteViewController: UICollectionViewDataSource  {
     

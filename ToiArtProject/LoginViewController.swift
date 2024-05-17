@@ -10,6 +10,7 @@ import UIKit
 protocol loginViewControllerDelegate: AnyObject {
     func didRegisterTapped()
     func didLoginTapped()
+    func showErrorAlert(message: String)
 }
 
 class LoginViewController: UIViewController {
@@ -20,6 +21,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setupHelpers()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loginUI.languagelocalizable()
     }
     
     private func setupHelpers() {
@@ -35,9 +41,23 @@ class LoginViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка".localized(),
+                                      message: message.localized(),
+                                      preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Ок".localized(), style: .destructive, handler: nil)
+        alert.addAction(acceptAction)
+        present(alert, animated: true)
+    }
 }
 
 extension LoginViewController: loginViewControllerDelegate {
+    
+    func showErrorAlert(message: String) {
+        showAlert(message: message)
+    }
+    
     func didRegisterTapped() {
         let vc = RegisterViewController()
         navigationController?.pushViewController(vc,
@@ -45,7 +65,7 @@ extension LoginViewController: loginViewControllerDelegate {
     }
     
     func didLoginTapped() {
-        let vc = TabBarController()
+        let vc = NameViewController()
         navigationController?.pushViewController(vc,
                                                  animated: true)
     }

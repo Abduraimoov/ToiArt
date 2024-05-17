@@ -10,7 +10,7 @@ import FirebaseAuth
 import SnapKit
 
 class PhoneNumberViewController: UIViewController {
-
+    
     private let autorizationview = PhoneNumberView()
     private let authService = AuthService.shared
     
@@ -18,6 +18,11 @@ class PhoneNumberViewController: UIViewController {
         super.viewDidLoad()
         setupHelpers()
         setupConstrains()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        autorizationview.localizedLanguage()
     }
     
     private func setupHelpers() {

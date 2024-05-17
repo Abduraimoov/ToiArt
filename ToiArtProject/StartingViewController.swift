@@ -24,11 +24,19 @@ class StartingViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startingUiView.localizedLanguage()
+    }
+    
     private func setupHelpers() {
         view.backgroundColor = .systemBackground
         startingUiView.delegate = self
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .label
+        navigationItem.hidesBackButton = true
+        self.hidesBottomBarWhenPushed = true
+        UserDefaults.standard.set(true, forKey: "RegisterSnreens")
     }
     
     private func setupConstraints() {

@@ -18,29 +18,25 @@ class LoginView: UIView {
     }()
     
     private let loginLabel: UILabel = {
-    let label = UILabel()
-    let attributedString = NSMutableAttributedString(string: "Login")
-    attributedString.addAttribute(.kern,
-                                  value: 2.0,
-                                  range: NSRange(location: 0,
-                                                 length: attributedString.length))
-    label.attributedText = attributedString
-    label.font = .systemFont(ofSize: 25, weight: .medium)
-    label.tintColor = .label
-    
-    return label
-}()
+        let label = UILabel()
+        label.text = "Логин"
+        label.font = .systemFont(ofSize: 25, weight: .medium)
+        label.tintColor = .label
+        
+        return label
+    }()
     
     private let enterCredemtailsLabel: UILabel = {
         let view = UILabel()
-        view.text = "Enter your emails and password"
+        view.text = "Введите адрес электронной почты и пароль"
         view.font = .systemFont(ofSize: 16,
                                 weight: .medium)
+        view.numberOfLines = 0
         view.textColor = UIColor.init(hex: "#7C7C7C")
         return view
     }()
     
-    private let emailTextField: PaddedTextField = {
+   private let emailTextField: PaddedTextField = {
         let view = PaddedTextField()
         view.layer.borderColor = UIColor.label.cgColor
         view.layer.borderWidth = 1
@@ -50,7 +46,7 @@ class LoginView: UIView {
     private let emailLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .label
-        view.text = " Email "
+        view.text = " Емаил "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -78,14 +74,13 @@ class LoginView: UIView {
                             for: .touchUpInside)
         view.rightView = rightView
         view.rightViewMode = .always
-        view.tag = 1
         return view
     }()
     
     private let passwordLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Password "
+        view.text = " Пароль "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -95,7 +90,7 @@ class LoginView: UIView {
     
     private let forgotButton: UIButton = {
         let view = UIButton()
-        view.setTitle("Forgot Password",
+        view.setTitle("Забыли пароль ?",
                       for: .normal)
         view.titleLabel?.font = .systemFont(ofSize: 14,
                                             weight: .medium)
@@ -106,7 +101,7 @@ class LoginView: UIView {
     
     private let LoginButton: UIButton = {
         let view = UIButton(type: .system)
-        view.setTitle("Log In",
+        view.setTitle("Войти",
                       for: .normal)
         view.tintColor = .black
         view.backgroundColor = UIColor.init(hex: "#00d400")
@@ -123,7 +118,7 @@ class LoginView: UIView {
     
     private let accountLabel: UILabel = {
         let view = UILabel()
-        view.text = "Already have an account?"
+        view.text = "У вас нету аккаунта ?"
         view.font = .systemFont(ofSize: 14,
                                 weight: .regular)
         view.textColor = .black
@@ -131,8 +126,8 @@ class LoginView: UIView {
     }()
     
     private let RegisterButton: UIButton = {
-        let view = UIButton()
-        view.setTitle("Register",
+        let view = UIButton(type: .system)
+        view.setTitle("Регстрация",
                       for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14,
                                                   weight: .medium)
@@ -153,6 +148,19 @@ class LoginView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func languagelocalizable() {
+        loginLabel.text = "Логин".localized()
+        enterCredemtailsLabel.text = "Введите адрес электронной почты и пароль".localized()
+        emailLabel.text = " Емаил ".localized()
+        passwordLabel.text = " Пароль ".localized()
+        forgotButton.setTitle("Забыли пароль ?".localized(), for: .normal)
+        LoginButton.setTitle("Войти".localized(),
+                      for: .normal)
+        accountLabel.text = "У вас нету аккаунта ?".localized()
+        RegisterButton.setTitle("Регстрация".localized(),
+                      for: .normal)
     }
     
     private func setupAdd() {
@@ -187,8 +195,7 @@ class LoginView: UIView {
         enterCredemtailsLabel.snp.makeConstraints { make in
             make.top.equalTo(loginLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(24)
-            make.height.equalTo(17)
-            make.width.equalTo(237)
+            make.right.equalToSuperview().offset(-24)
         }
         
         emailTextField.snp.makeConstraints { make in
@@ -235,11 +242,17 @@ class LoginView: UIView {
     
     private func setupAddTarget() {
         LoginButton.addTarget(self,
-                              action: #selector(TabBarUI),
+                              action: #selector(loginButtonTapped),
                               for: .touchUpInside)
         RegisterButton.addTarget(self,
                                  action: #selector(registerUI),
                                  for: .touchUpInside)
+        emailTextField.addTarget(self,
+                                 action: #selector(textFieldsDidChange),
+                                 for: .editingChanged)
+        passwordTextField.addTarget(self,
+                                    action: #selector(textFieldsDidChange), 
+                                    for: .editingChanged)
     }
     
     private func setupDelegates() {
@@ -249,13 +262,7 @@ class LoginView: UIView {
     
     @objc
     private func hideText(_ sender: UIButton) {
-        
-        switch sender.tag {
-        case 0:
-            passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
-        default:
-            break
-        }
+        passwordTextField.isSecureTextEntry.toggle()
     }
     
     @objc
@@ -266,6 +273,38 @@ class LoginView: UIView {
     @objc
     private func TabBarUI() {
         delegate?.didLoginTapped()
+    }
+    
+    @objc
+    private func loginButtonTapped() {
+        guard let emailText = emailTextField.text, let passwordText = passwordTextField.text else {
+            return
+        }
+        
+        var errorMessages: [String] = []
+        
+        if !emailText.contains("@gmail.com") {
+            errorMessages.append("Обязательно напишите @gmail.com".localized())
+        }
+        
+        if passwordText.count < 6 {
+            errorMessages.append("Пароль должен быть не менее 6 символов".localized())
+        }
+        
+        if errorMessages.isEmpty {
+            delegate?.didLoginTapped()
+        } else {
+            let message = errorMessages.joined(separator: "\n")
+            delegate?.showErrorAlert(message: message)
+        }
+    }
+    
+    @objc
+    private func textFieldsDidChange() {
+       
+        guard let emailText = emailTextField.text, let passwordText = passwordTextField.text else {
+            return
+        }
     }
 }
 

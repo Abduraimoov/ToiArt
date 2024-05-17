@@ -11,19 +11,27 @@ import SnapKit
 class ScheduleViewController: UIViewController {
     
     private let scheduleUI = ScheduleView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHelpers()
         setupConstrains()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLocalizable()
+    }
+    
     private func setupHelpers() {
         view.backgroundColor = .systemBackground
-//        startingUiView.delegate = self
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .label
-        navigationItem.title = "График работы"
+    }
+    
+    private func setupLocalizable() {
+        navigationItem.title = "График работы".localized()
+        scheduleUI.localizedLanguage()
     }
     
     private func setupConstrains() {
@@ -32,5 +40,5 @@ class ScheduleViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
 }
+
