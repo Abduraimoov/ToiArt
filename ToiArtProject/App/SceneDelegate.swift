@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             AppLanguageManager.shared.setApplanguage(language: language)
         }
         if UserDefaults.standard.bool(forKey: "RegisterSnreens") == true {
-            rootViewController = ViewController()
+            rootViewController = StartingViewController()
         } else {
             rootViewController = StartingViewController()
         }
