@@ -36,7 +36,7 @@ class NameView: UIView {
     private let nameLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Напишите свою имю ".localized()
+        view.text = " Введите имя ".localized()
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -71,7 +71,7 @@ class NameView: UIView {
     
     func localizedlanguage() {
         entranceTitle.text = "Фамилия и имя".localized()
-        nameLabel.text = " Напишите свою имю ".localized()
+        nameLabel.text = " Введите имя ".localized()
         toComeInButton.setTitle(
             "Войти".localized(),
             for: .normal)

@@ -27,6 +27,7 @@ class PhoneNumberView: UIView {
         view.font = .systemFont(
             ofSize: 24,
             weight: .medium)
+        view.numberOfLines = 0
         return view
     }()
     
@@ -121,8 +122,9 @@ class PhoneNumberView: UIView {
         }
         
         entranceTitle.snp.makeConstraints { make in
-            make.top.equalTo(logoIcon.snp.bottom).offset(50)
+            make.top.equalTo(logoIcon.snp.bottom).offset(45)
             make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
         }
         
         numberTextFeild.snp.makeConstraints { make in

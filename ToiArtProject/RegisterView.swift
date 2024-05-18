@@ -18,7 +18,7 @@ class RegisterView: UIView {
     
     private let registerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Регстрация"
+        label.text = "Регистрация"
         label.font = .systemFont(ofSize: 25, weight: .medium)
         label.tintColor = .label
         
@@ -45,7 +45,7 @@ class RegisterView: UIView {
     private let emailLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .label
-        view.text = " Введите емаил "
+        view.text = " Электронная почта "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -64,7 +64,7 @@ class RegisterView: UIView {
     private let nameLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .systemGray5
-        view.text = " Введите имю "
+        view.text = " Введите имя "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -214,13 +214,13 @@ class RegisterView: UIView {
     }
     
     func localizesLanguage() {
-        registerLabel.text = "Регстрация".localized()
+        registerLabel.text = "Регистрация".localized()
         enterCredemtailsLabel.text = "Введите свои учетные данные, чтобы продолжить".localized()
-        emailLabel.text = " Введите емаил ".localized()
-        nameLabel.text = " Введите имю ".localized()
+        emailLabel.text = " Электронная почта ".localized()
+        nameLabel.text = " Введите имя ".localized()
         numberLabel.text = " Введите номер ".localized()
         passwordLabel.text = " Введите пароль ".localized()
-        confirmLabel.text = " Подтвердите пароль "
+        confirmLabel.text = " Подтвердите пароль ".localized()
         SingupButton.setTitle("Войти".localized(),
                               for: .normal)
         accountLabel.text = "Уже есть аккаунт ?".localized()

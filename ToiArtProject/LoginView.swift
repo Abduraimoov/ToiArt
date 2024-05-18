@@ -46,7 +46,7 @@ class LoginView: UIView {
     private let emailLabel: UILabel = {
         let view = UILabel()
         view.tintColor = .label
-        view.text = " Емаил "
+        view.text = " Электронная почта "
         view.font = .systemFont(
             ofSize: 16,
             weight: .regular)
@@ -127,7 +127,7 @@ class LoginView: UIView {
     
     private let RegisterButton: UIButton = {
         let view = UIButton(type: .system)
-        view.setTitle("Регстрация",
+        view.setTitle("регистрация",
                       for: .normal)
         view.titleLabel?.font = UIFont.systemFont(ofSize: 14,
                                                   weight: .medium)
@@ -153,13 +153,13 @@ class LoginView: UIView {
     func languagelocalizable() {
         loginLabel.text = "Логин".localized()
         enterCredemtailsLabel.text = "Введите адрес электронной почты и пароль".localized()
-        emailLabel.text = " Емаил ".localized()
+        emailLabel.text = " Электронная почта ".localized()
         passwordLabel.text = " Пароль ".localized()
         forgotButton.setTitle("Забыли пароль ?".localized(), for: .normal)
         LoginButton.setTitle("Войти".localized(),
                       for: .normal)
         accountLabel.text = "У вас нету аккаунта ?".localized()
-        RegisterButton.setTitle("Регстрация".localized(),
+        RegisterButton.setTitle("регистрация".localized(),
                       for: .normal)
     }
     
