@@ -30,7 +30,7 @@ class TabBarController: UITabBarController {
         viewControllers = [
             generateVC(
                 viewController: HomeViewController(),
-                image: UIImage(systemName: "house")
+                image: UIImage(systemName: "house.fill")
             ),
             generateVC(
                 viewController: ScheduleViewController(),
@@ -38,7 +38,7 @@ class TabBarController: UITabBarController {
             ),
             generateVC(
                 viewController: NoteViewController(),
-                image: UIImage(systemName: "note.text.badge.plus")
+                image: UIImage(systemName: "note.text")
             ),
             generateVC(
                 viewController: MenuViewController(),
@@ -68,7 +68,7 @@ class TabBarController: UITabBarController {
         
         tabBar.itemWidth = width / 5
         tabBar.itemPositioning = .centered
-        tabBar.tintColor = UIColor.systemBlue
+        tabBar.tintColor = UIColor.init(hex: "#00AA00")
         tabBar.unselectedItemTintColor = UIColor.gray
     }
 }

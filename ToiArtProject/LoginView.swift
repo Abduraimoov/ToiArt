@@ -96,6 +96,7 @@ class LoginView: UIView {
                                             weight: .medium)
         view.setTitleColor(UIColor.init(hex: "#53B175"),
                            for: .normal)
+        view.contentHorizontalAlignment = .trailing
         return view
     }()
     
@@ -224,7 +225,7 @@ class LoginView: UIView {
             make.top.equalTo(passwordTextField.snp.bottom).offset(20)
             make.right.equalToSuperview().offset(-24)
             make.height.equalTo(14)
-            make.width.equalTo(125)
+            make.width.equalTo(185)
         }
         
         LoginButton.snp.makeConstraints { make in

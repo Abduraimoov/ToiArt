@@ -7,12 +7,13 @@
 
 import UIKit
 import SnapKit
+import AVFoundation
 
 class ScheduleView: UIView {
     
     private let hoursImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "hours")
+        view.image = UIImage(named: "watch")
         view.contentMode = .scaleAspectFill
         return view
     }()
@@ -43,7 +44,7 @@ class ScheduleView: UIView {
     
     private let grayView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray3
+//        view.backgroundColor = .systemGray3
         view.layer.cornerRadius = 16
         return view
     }()
@@ -118,16 +119,54 @@ class ScheduleView: UIView {
         return view
     }()
     
+    var player: AVPlayer?
+      var playerLayer: AVPlayerLayer?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupAdd()
         setupConstrains()
         setupHelpers()
+        setupVideoBackground()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setupVideoBackground() {
+           guard let path = Bundle.main.path(forResource: "adobestock-494510368_tOtaKy1V", ofType: "mp4") else {
+               print("Video file not found")
+               return
+           }
+           let url = URL(fileURLWithPath: path)
+
+           player = AVPlayer(url: url)
+           player?.isMuted = true
+
+           playerLayer = AVPlayerLayer(player: player)
+           playerLayer?.frame = grayView.bounds
+           playerLayer?.videoGravity = .resizeAspectFill
+
+           if let playerLayer = playerLayer {
+               grayView.layer.insertSublayer(playerLayer, at: 0)
+           }
+
+           player?.play()
+
+           NotificationCenter.default.addObserver(
+               forName: .AVPlayerItemDidPlayToEndTime,
+               object: player?.currentItem,
+               queue: .main) { [weak self] _ in
+                   self?.player?.seek(to: CMTime.zero)
+                   self?.player?.play()
+           }
+       }
+       
+       override func layoutSubviews() {
+           super.layoutSubviews()
+           playerLayer?.frame = grayView.bounds 
+       }
     
     func localizedLanguage() {
         daysLabel.text = "Понедельник - воскресенье".localized()
