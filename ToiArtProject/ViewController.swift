@@ -8,7 +8,11 @@
 import UIKit
 import SnapKit
 
+//MARK: - Экран логотипа с анимацией
+
 class ViewController: UIViewController {
+    
+    //MARK: - Добавляем картинку на экран
     
     private let logoImageView: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 310, height: 77))
@@ -16,12 +20,16 @@ class ViewController: UIViewController {
         return view
     }()
     
+    //MARK: - viewDidLoad() это типа отоброжи это все коды внутри него отображаеться на экран
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(logoImageView)
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
     }
+    
+    //MARK: - Дальше уже анимация картинка
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

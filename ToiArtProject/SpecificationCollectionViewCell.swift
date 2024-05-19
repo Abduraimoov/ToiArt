@@ -10,7 +10,11 @@ import SnapKit
 
 class SpecificationCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Елементы внутри collection view
+    
     static var reuseId = "note_cell"
+    
+    //MARK: - Создание елементов
     
     private let NameLabel: UILabel = {
         let view = UILabel()
@@ -58,6 +62,8 @@ class SpecificationCollectionViewCell: UICollectionViewCell {
         return view
     }()
 
+    //MARK: - Хранение функции чтобы отображать на внутри collection view
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupAdd()
@@ -68,6 +74,8 @@ class SpecificationCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - добавление внутри collection view
+    
     private func setupAdd() {
         addSubview(NameLabel)
         addSubview(DecpriptionLabel)
@@ -76,6 +84,8 @@ class SpecificationCollectionViewCell: UICollectionViewCell {
         addSubview(WaitLabel)
         addSubview(logoImage)
     }
+    
+    //MARK: - Расположение елементы внутри collection view
     
     private func setupConstraints() {
         NameLabel.snp.makeConstraints { make in
@@ -110,6 +120,8 @@ class SpecificationCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(120)
         }
     }
+    
+    //MARK: - Все елементы сможем использовать несколько раз ( вверху создаем и здес напишем код что мы эти елементы использоваем сколько столько хотим )
     
     func configure(with collection: SpecificationCollectionStruct) {
         NameLabel.text = collection.name

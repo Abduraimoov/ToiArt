@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - именно ушул код менен collection view дун ичиндеги елементерин каалашынча колдоно алабыз
+
 struct SpecificationCollectionStruct {
     var name: String
     var description: String

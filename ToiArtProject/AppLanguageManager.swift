@@ -7,6 +7,8 @@
 
 import Foundation
 
+//MARK: - Изменения языка
+
 enum languageType: String {
     case kg = "ky-KG"
     case ru = "ru"

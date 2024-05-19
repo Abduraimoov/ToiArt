@@ -9,6 +9,8 @@ import UIKit
 
 class HomeView: UIView {
     
+    // MARK: - Все UI часть, верстка
+    
     private let programmLabel: UILabel = {
         let view = UILabel()
         view.text = "Наши программы"
@@ -39,6 +41,8 @@ class HomeView: UIView {
         return view
     }()
     
+    //MARK: - Заполнение елементы collectionView
+    
     private var CollectionElements: [SpecificationCollectionStruct] = [
         SpecificationCollectionStruct(name: "Стандарт ⭐".localized(),
                                       description: "• 1,5 часа 1400".localized(),
@@ -66,6 +70,7 @@ class HomeView: UIView {
                                       image: "image3"),
         
     ]
+    //MARK: - Хранение функции чтобы отображать на экран
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,6 +81,7 @@ class HomeView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK: - Изменение языка елементы Collection View
     
     func localizableLanguage() {
         CollectionElements = [
@@ -102,16 +108,32 @@ class HomeView: UIView {
                                           descriptionTables: "• 1 изделие на каждого чел".localized(),
                                           descriptionDays: "• 1 изделие на ганчорном круге".localized(),
                                           descriptionWait: "• изделие на за столом".localized(),
-                                          image: "image3")]
+                                          image: "image3"),
+            SpecificationCollectionStruct(name: "Свидание ❤️❤️".localized(),
+                                          description: "• 4000 группе 2x чел".localized(),
+                                          descriptionTables: "• 1 изделие на каждого чел".localized(),
+                                          descriptionDays: "• 1 изделие на ганчорном круге".localized(),
+                                          descriptionWait: "• изделие на за столом".localized(),
+                                          image: "image3"),
+            SpecificationCollectionStruct(name: "Свидание ❤️❤️".localized(),
+                                          description: "• 4000 группе 2x чел".localized(),
+                                          descriptionTables: "• 1 изделие на каждого чел".localized(),
+                                          descriptionDays: "• 1 изделие на ганчорном круге".localized(),
+                                          descriptionWait: "• изделие на за столом".localized(),
+                                          image: "image3")
+        ]
         programmLabel.text = "Наши программы".localized()
         potteryLabel.text = "Гончарные программы".localized()
     }
+    //MARK: - добавить елементы на экран
     
     private func setupAdd() {
         addSubview(programmLabel)
         addSubview(potteryLabel)
         addSubview(specificationCollectionView)
     }
+    
+    //MARK: - Констреинты елементы, расположения
     
     private func setupConstraints() {
         programmLabel.snp.makeConstraints { make in
@@ -131,6 +153,7 @@ class HomeView: UIView {
         }
     }
 }
+//MARK: - Отоброжения на экран, елементы Collection view
 
 extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

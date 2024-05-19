@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+//MARK: -  Изменения языка
+
 protocol LanguageViewDelegate: AnyObject {
     func didLanguageSelect(LanguageType: languageType)
 }

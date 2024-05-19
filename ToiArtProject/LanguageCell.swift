@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+//MARK: -  Изменения языка
+
 struct Language {
     var image: String
     var title: String
