@@ -83,3 +83,4 @@
 "Пароли не совпадают" = "Password mismatch";
 "Введите номер мобильного телефона" = "Enter your mobile phone number";
 "Введите свой шестизначный код" = "Enter your six-digit code";
+"Извините, но, похоже, код СМС неправильный. Не могли бы вы проверить его и прислать правильный?" = "Sorry, but it seems the SMS code is incorrect. Could you please check it and send the correct one?";

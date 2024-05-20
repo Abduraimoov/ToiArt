@@ -15,6 +15,8 @@ enum coreDataResponse {
 
 class CoreDataService {
     
+    //MARK: - Сохрарение заметки
+    
     static let shared = CoreDataService()
     
     private init() {

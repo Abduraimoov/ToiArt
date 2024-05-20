@@ -8,6 +8,7 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    //MARK: - Таббар
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,7 @@ class TabBarController: UITabBarController {
         viewController.tabBarItem.image = image
         return navController
     }
+    //MARK: - Все экраны таббара
     
     private func generateTabBar() {
         viewControllers = [
@@ -46,6 +48,7 @@ class TabBarController: UITabBarController {
             )
         ]
     }
+    //MARK: - Анимация таббара
     
     private func setTabBarAppearance() {
         let positionOnX: CGFloat = 8

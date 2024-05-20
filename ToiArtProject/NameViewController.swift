@@ -6,6 +6,7 @@
 //
 
 import UIKit
+//MARK: - Протоколы используеться переход экран итд
 
 protocol NameViewControllerDelegate: AnyObject {
     func didTabBarController()
@@ -13,27 +14,29 @@ protocol NameViewControllerDelegate: AnyObject {
 }
 
 class NameViewController: UIViewController {
-    
+    //MARK: - UI елементы вставляем на экран
     private let NameUI = NameView()
-    
+    //MARK: - все функции внутри него работаеть
     override func viewDidLoad() {
         super.viewDidLoad()
         setupHelpers()
         setupConstraints()
     }
-    
+    //MARK: - Изменение языка
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NameUI.localizedlanguage()
     }
-    
+    //MARK: - помощники
     private func setupHelpers() {
+        //MARK: - Цвет экрана
         view.backgroundColor = .systemBackground
+        //MARK: - с этим кодом переход экраны начинаеть работать
         NameUI.delegate = self
         navigationItem.backButtonTitle = ""
         navigationController?.navigationBar.tintColor = .label
     }
-    
+    //MARK: - Расположение экран елементов на главный экран
     private func setupConstraints() {
         view.addSubview(NameUI)
         NameUI.snp.makeConstraints { make in
@@ -41,7 +44,7 @@ class NameViewController: UIViewController {
         }
     }
 }
-
+//MARK: - Переход экраны
 extension NameViewController: NameViewControllerDelegate {
     
     func didTabBarController() {

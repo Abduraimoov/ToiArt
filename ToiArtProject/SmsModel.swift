@@ -66,7 +66,7 @@ extension SmsModel: UITextFieldDelegate {
 extension UIViewController {
     
     func showAlert() {
-        let alertController = UIAlertController(title: "Sorry, but it seems the SMS code is incorrect. Could you please check it and send the correct one?",
+        let alertController = UIAlertController(title: "Извините, но, похоже, код СМС неправильный. Не могли бы вы проверить его и прислать правильный?".localized(),
                                                 message: nil,
                                                 preferredStyle: .alert)
         

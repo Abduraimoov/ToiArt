@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//MARK: - Переход и сохранение заметки
 protocol NewNoteViewProtocol {
     func successAddNote()
     func failureAddNote()
@@ -18,7 +18,7 @@ protocol NewNoteViewProtocol {
 class NewNotesView: UIViewController, UITextViewDelegate {
 
      var controller: NewNoteControllerProtocol?
-
+    
     private let coreDataService = CoreDataService.shared
 
     var note: Note?

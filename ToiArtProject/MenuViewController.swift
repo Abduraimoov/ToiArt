@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+//MARK: - Переход экрана
 protocol menuViewControllerDelegate: AnyObject {
     func didBackButton()
     func didPresent()
@@ -59,7 +59,7 @@ class MenuViewController: UIViewController {
 }
 
 extension MenuViewController: menuViewControllerDelegate {
-    
+    //MARK: - Экран выбор языка
     func didPresent() {
         let languageView = LanguageView()
         languageView.delegates = self

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class NameView: UIView {
-    
+    //MARK: - Елементы UI
     private lazy var logoIcon: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "logoImageToi")
@@ -56,7 +56,7 @@ class NameView: UIView {
     }()
     
     weak var delegate: NameViewControllerDelegate?
-    
+    //MARK: - Все функции хранится внутри него чтобы работать
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
@@ -68,7 +68,7 @@ class NameView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK: - Изменение языка
     func localizedlanguage() {
         entranceTitle.text = "Фамилия и имя".localized()
         nameLabel.text = " Введите имя ".localized()
@@ -76,13 +76,13 @@ class NameView: UIView {
             "Войти".localized(),
             for: .normal)
     }
-    
+    //MARK: - Перход экраны
     private func setupAddTarget() {
         toComeInButton.addTarget(self, action: #selector(screenTransition), for: .touchUpInside)
         nameTextField.delegate = self
     }
     
-    
+    //MARK: - Добавляем елементы на экран
     private func setupAdd() {
         addSubview(logoIcon)
         addSubview(entranceTitle)
@@ -90,7 +90,7 @@ class NameView: UIView {
         addSubview(nameLabel)
         addSubview(toComeInButton)
     }
-    
+    //MARK: - Расположение елементы на экран
     private func setupConstrains() {
         logoIcon.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
@@ -122,7 +122,7 @@ class NameView: UIView {
             make.height.equalTo(50)
         }
     }
-    
+    //MARK: - Изменение языка + переход экрана
     @objc
     private func screenTransition() {
         guard let nameText = nameTextField.text, !nameText.isEmpty else {
@@ -133,7 +133,7 @@ class NameView: UIView {
         delegate?.didTabBarController()
     }
 }
-
+//MARK: - Анимация текст филда
 extension NameView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

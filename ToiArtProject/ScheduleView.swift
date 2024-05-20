@@ -118,9 +118,7 @@ class ScheduleView: UIView {
         view.textColor = .label
         return view
     }()
-    
-  
-    
+      
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupAdd()
@@ -218,6 +216,7 @@ class ScheduleView: UIView {
             make.centerX.equalToSuperview()
         }
     }
+    //MARK: - Сохронение дата при начало работе
     
     @objc private func addButtonTapped() {
         let currentDate = Date()
@@ -233,6 +232,7 @@ class ScheduleView: UIView {
         plusButton.backgroundColor = UIColor.init(hex: "#00d400")
         settingsTableView.reloadData()
     }
+    //MARK: - Сохронение дата при выход работе
     
     @objc private func plusButtonTapped() {
         guard attendanceData.count > 0 else { return }

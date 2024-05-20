@@ -51,18 +51,28 @@ class PhoneNumberViewController: UIViewController {
 extension PhoneNumberViewController: PhoneNumberViewDelegate {
     
     func smsCode(with phoneNumberTFText: String) {
-        
-        authService.sendSmsCode(with: phoneNumberTFText) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success:
-                    let vc = SmsViewController()
-                    self.navigationController?.pushViewController(vc, animated: true)
-                case .failure(let error):
-                    print("Failed to send SMS: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-}
+           
+           if phoneNumberTFText.hasPrefix("+996") && phoneNumberTFText.count == 13 {
+               authService.sendSmsCode(with: phoneNumberTFText) { result in
+                   DispatchQueue.main.async {
+                       switch result {
+                       case .success:
+                           let vc = SmsViewController()
+                           self.navigationController?.pushViewController(vc, animated: true)
+                       case .failure(let error):
+                           self.presentAlert(with: "Ошибка отправки SMS", message: error.localizedDescription)
+                       }
+                   }
+               }
+           } else {
+               
+               self.presentAlert(with: "Неверный формат номера", message: "Пожалуйста, введите номер с кодом +996 и общей длиной 13 символов.")
+           }
+       }
+
+       private func presentAlert(with title: String, message: String) {
+           let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+           self.present(alert, animated: true, completion: nil)
+       }
+   }
